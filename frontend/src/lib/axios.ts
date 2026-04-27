@@ -3,7 +3,10 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    import.meta.env.MODE === "development" ? "http://localhost:5001/api" : "/api",
+    import.meta.env.MODE === "development"
+      ? "http://localhost:5001/api"
+      : import.meta.env.VITE_API_BASE_URL ||
+        "https://moji-uksv.onrender.com/api",
   withCredentials: true,
 });
 
@@ -53,7 +56,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;
