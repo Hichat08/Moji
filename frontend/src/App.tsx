@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import SignInPage from "./pages/SignInPage";
 import ChatAppPage from "./pages/ChatAppPage";
 import { Toaster } from "sonner";
@@ -12,22 +12,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* public routes */}
-          <Route
-            path="/signin"
-            element={<SignInPage />}
-          />
-          <Route
-            path="/signup"
-            element={<SignUpPage />}
-          />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
 
-          {/* protectect routes */}
+          {/* protected routes */}
           <Route element={<ProtectedRoute />}>
-            <Route
-              path="/"
-              element={<ChatAppPage />}
-            />
+            <Route path="/" element={<ChatAppPage />} />
           </Route>
+
+          {/* SPA fallback for unknown client-side routes */}
+          <Route path="*" element={<Navigate to="/signin" replace />} />
         </Routes>
       </BrowserRouter>
     </>
